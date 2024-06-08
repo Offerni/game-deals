@@ -27,7 +27,7 @@ const Game = (props: Props) => {
         }
       >
         <div className="h-full flex flex-col justify-center">
-          <h2 className="title-font font-medium text-lg text-textPrimary dark:text-textPrimary-dark font-bold">
+          <h2 className="title-font text-lg text-textPrimary dark:text-textPrimary-dark font-bold">
             <a
               href={`https://www.cheapshark.com/redirect?dealID=${game.cheapestDealId}`}
               target="_blank"

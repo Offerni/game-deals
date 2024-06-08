@@ -3,7 +3,7 @@ import { get } from "httpRequests";
 import { IStoreInfo, IStoreInfoImage, IStoreInfoLocal } from "./types";
 
 export const getStoresInfo = async (): Promise<IStoreInfo[]> => {
-  const apiUrl: string | undefined = process.env.REACT_APP_API_URL;
+  const apiUrl: string | undefined = process.env.NEXT_PUBLIC_API_URL;
   const stores = await get<APIStore[]>(`${apiUrl}/stores`);
 
   return convertAPIStore(stores);

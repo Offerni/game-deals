@@ -1,7 +1,9 @@
-import logoSvg from "../logo.svg";
+import Image from "next/image";
 
 const Logo = () => (
-  <img src={logoSvg} alt="deal finder logo" className="w-6 h-6" />
+  <div className="relative w-6 h-6">
+    <Image src="/logo.svg" alt="deal finder logo" fill />
+  </div>
 );
 
 export default Logo;

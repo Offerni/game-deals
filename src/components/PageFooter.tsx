@@ -1,6 +1,8 @@
-import { Link } from "react-router-dom";
+"use client";
+
 import { trackClickEvent } from "utils";
 import Logo from "./Logo";
+import Link from "next/link";
 
 const PageFooter = () => {
   const handleGithubClick = () => {
@@ -8,7 +10,7 @@ const PageFooter = () => {
   };
   return (
     <footer className="text-gray-600 body-font bg-primary dark:bg-primary-dark w-full fixed bottom-0 opacity-80 py-1 px-5 flex sm:gap-2 gap-3 items-center">
-      <Link to="/">
+      <Link href="/">
         <Logo />
       </Link>
       <p className="text-sm text-gray-500 dark:text-gray-300 flex-1">

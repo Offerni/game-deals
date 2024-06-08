@@ -1,5 +1,7 @@
+"use client";
+
 import { Fragment, useContext } from "react";
-import { Dialog, Transition } from "@headlessui/react";
+import { Dialog, Transition, TransitionChild } from "@headlessui/react";
 import { ModalContext } from "./ModalContext";
 import { IModalReducerState } from "types";
 import { ModalContent } from "./ModalContent";
@@ -12,7 +14,7 @@ export const Modal = (props: Props) => {
   const dispatch = useContext(ModalContext);
 
   return (
-    <Transition.Root show={props.state.open} as={Fragment}>
+    <Transition show={props.state.open} as={Fragment}>
       <Dialog
         as="div"
         static
@@ -21,7 +23,7 @@ export const Modal = (props: Props) => {
         onClose={() => dispatch({ type: "close" })}
       >
         <div className="flex items-center justify-center min-h-screen pt-2 px-2 pb-20 text-center sm:block sm:p-0 mt-6">
-          <Transition.Child
+          <TransitionChild
             as={Fragment}
             enter="ease-out duration-100"
             enterFrom="opacity-0"
@@ -30,9 +32,9 @@ export const Modal = (props: Props) => {
             leaveFrom="opacity-100"
             leaveTo="opacity-0"
           >
-            <Dialog.Overlay className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" />
-          </Transition.Child>
-          <Transition.Child
+            <div className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" />
+          </TransitionChild>
+          <TransitionChild
             as={Fragment}
             enter="ease-out duration-100"
             enterFrom="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
@@ -58,10 +60,10 @@ export const Modal = (props: Props) => {
                 </button>
               </div>
             </div>
-          </Transition.Child>
+          </TransitionChild>
         </div>
       </Dialog>
-    </Transition.Root>
+    </Transition>
   );
 };
 

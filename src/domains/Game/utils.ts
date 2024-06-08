@@ -18,7 +18,7 @@ import { parseImageUrlForBiggerImage } from "domains/Deal/utils";
 import { getStoreLogo } from "domains/Store/utils";
 import { get } from "httpRequests";
 
-const API_PATH: string | undefined = `${process.env.REACT_APP_API_URL}/games`;
+const API_PATH: string | undefined = `${process.env.NEXT_PUBLIC_API_URL}/games`;
 
 export const getGamesByTitle = async (
   title: string,

@@ -64,5 +64,5 @@ export const trackClickEvent = (
   options?: Record<string, any>
 ) => {
   // @ts-ignore gtag is at window
-  window.gtag("event", `click_${subject}`, options || {});
+  // window.gtag("event", `click_${subject}`, options || {});
 };
