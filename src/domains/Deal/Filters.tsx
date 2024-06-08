@@ -1,16 +1,16 @@
 import { getOrderedStores } from "domains/Store/utils";
 import { useEffect, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
-import { useHistory, useLocation } from "react-router";
 import { IFilters } from "types";
 import { FilterIcon } from "@heroicons/react/outline";
 import { trackClickEvent } from "utils";
+import { usePathname, useRouter } from "next/navigation";
 
 const ORDERED_STORES = getOrderedStores();
 
 export const Filters = () => {
-  const history = useHistory();
-  const location = useLocation();
+  const router = useRouter();
+  const pathname = usePathname();
   const [filterOpen, setFilterOpen] = useState(false);
   const { register, handleSubmit, reset } = useForm();
 
@@ -18,7 +18,7 @@ export const Filters = () => {
     // resetting filters
     setFilterOpen(false);
     reset();
-  }, [location.pathname, reset, setFilterOpen]);
+  }, [pathname, reset, setFilterOpen]);
 
   const handleClick = () => {
     setFilterOpen(!filterOpen);
@@ -26,7 +26,12 @@ export const Filters = () => {
   };
 
   const onSubmit: SubmitHandler<IFilters> = (data) => {
-    history.push(location.pathname, data);
+    console.log(pathname);
+    const urlParams = new URLSearchParams();
+    console.log(urlParams);
+    urlParams.append("storeIds", data.storeIds.join(","));
+    urlParams.toString();
+    router.push(`${pathname}?${urlParams.toString()}`);
   };
 
   const handleOnChange = () => {

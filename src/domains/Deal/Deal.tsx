@@ -11,9 +11,9 @@ type Props = {
 
 const Deal = (props: Props) => {
   const { deal } = props;
-  const imgUrl: string | undefined = process.env.REACT_APP_IMAGE_URL;
+  const imgUrl: string | undefined = process.env.NEXT_PUBLIC_IMAGE_URL;
   const metacriticUrl: string | undefined =
-    process.env.REACT_APP_METACRITIC_URL;
+    process.env.NEXT_PUBLIC_METACRITIC_URL;
   const origin = window.location.origin;
 
   const handleCopyClick = (dealId: string) => {

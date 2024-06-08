@@ -1,8 +1,6 @@
 import Error from "components/Error";
 import Skeletons from "components/Skeletons";
 import { useEffect, useState } from "react";
-import { Redirect, useLocation } from "react-router";
-import { ISearch } from "types";
 import { PATHS } from "utils";
 import Game from "./Game";
 import { IGameSearch } from "./types";
@@ -11,20 +9,21 @@ import {
   isValidQueryParams,
   parseGamesQueryParams,
 } from "./utils";
+import { useSearchParams } from "next/navigation";
 
 const Games = () => {
   const [games, setGames] = useState<IGameSearch[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
-  const location = useLocation<ISearch>();
-  const { search } = location;
+  const searchParams = useSearchParams();
+  const query = searchParams.get("q");
   const [error, setError] = useState<Error>();
 
   useEffect(() => {
-    const parsedQueryParams = parseGamesQueryParams(search);
+    const parsedQueryParams = query;
 
-    if (parsedQueryParams.query) {
+    if (parsedQueryParams) {
       setIsLoading(true);
-      getGamesByTitle(parsedQueryParams.query, { exact: 0 })
+      getGamesByTitle(parsedQueryParams, { exact: 0 })
         .then((response) => {
           setGames(response);
           setIsLoading(false);
@@ -33,16 +32,10 @@ const Games = () => {
           setError(error);
         });
     }
-  }, [search]);
+  }, [query]);
 
-  if (!isValidQueryParams(search)) {
-    return (
-      <Redirect
-        to={{
-          pathname: PATHS.deals,
-        }}
-      />
-    );
+  if (!query) {
+    return null;
   }
 
   if (isLoading && !error) {

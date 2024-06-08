@@ -1,13 +1,13 @@
 import { ISearch } from "types";
 import { useForm, SubmitHandler } from "react-hook-form";
-import { useHistory } from "react-router";
+import { useRouter } from "next/navigation";
 
 const SearchBar = () => {
-  const history = useHistory();
+  const router = useRouter();
   const { register, handleSubmit, clearErrors } = useForm<ISearch>();
 
   const onSearchSubmit: SubmitHandler<ISearch> = (search: ISearch) => {
-    history.push(`/games?q=${search.params}`);
+    router.push(`/games?q=${search.params}`);
   };
 
   return (

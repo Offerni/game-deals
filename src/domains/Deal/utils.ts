@@ -18,7 +18,7 @@ import { getStoreLogo } from "domains/Store/utils";
 import { IDealsLocation } from "types";
 import { get } from "httpRequests";
 
-const API_PATH: string | undefined = `${process.env.REACT_APP_API_URL}/deals`;
+const API_PATH: string | undefined = `${process.env.NEXT_PUBLIC_API_URL}/deals`;
 
 export const getDeals = async (
   options: APIDealsQueryParams

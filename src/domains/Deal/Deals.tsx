@@ -10,24 +10,26 @@ import {
 import InfiniteScroll from "react-infinite-scroll-component";
 import LoadingSpinner from "components/LoadingSpinner";
 import Skeletons from "components/Skeletons";
-import { useLocation, useParams } from "react-router";
 import { PAGE_SIZE, scrollToTop } from "utils";
-import { IDealsLocation } from "types";
 import { useForm } from "react-hook-form";
 import Error from "components/Error";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
 const Deals = () => {
   const [deals, setDeals] = useState<IDeal[]>([]);
   const [error, setError] = useState<string>("");
-  const location: IDealsLocation = useLocation();
+  const router = useRouter();
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const { reset } = useForm();
-  const { id } = useParams<IDealParams>();
+  const searchParams = useSearchParams();
+  const id = searchParams.get("id");
+  const storeIds = searchParams.getAll("storeIds");
+  const pathname = usePathname();
 
   useEffect(() => {
     scrollToTop();
     setDeals([]);
-    window.history.replaceState({}, document.title); // reseting
+    //window.history.replaceState({}, document.title); // reseting
 
     setIsLoading(true);
     if (id) {
@@ -39,17 +41,20 @@ const Deals = () => {
         setDeals(responseArray);
         setIsLoading(false);
       });
-    } else {
-      getDeals(builDealsQueryParams(location))
-        .then((response) => {
-          setDeals(response);
-          setIsLoading(false);
-        })
-        .catch((err: Error) => {
-          setError(err.message);
-        });
     }
-  }, [location, reset, id]);
+  }, [id]);
+
+  // useEffect(() => {
+
+  //   getDeals(builDealsQueryParams({ pathname, state: { storeIds } }))
+  //     .then((response) => {
+  //       setDeals(response);
+  //       setIsLoading(false);
+  //     })
+  //     .catch((err: Error) => {
+  //       setError(err.message);
+  //     });
+  // }, [pathname, storeIds]);
 
   if (isLoading && !error) {
     return <Skeletons />;
@@ -68,14 +73,16 @@ const Deals = () => {
   }
 
   const fetchNextDeals = () => {
-    getDeals(builDealsQueryParams(location, deals.length)).then((response) => {
-      setDeals((currentDeals) => [...currentDeals, ...response]);
-    });
+    getDeals(builDealsQueryParams({ pathname }, deals.length)).then(
+      (response) => {
+        setDeals((currentDeals) => [...currentDeals, ...response]);
+      }
+    );
   };
 
   return (
     <InfiniteScroll
-      className="grid xl:grid-cols-3 lg:grid-cols-2 gap-6 place-items-center p-3 mt-10"
+      className="grid xl:grid-cols-3 lg:grid-cols-2 gap-6 place-items-center p-3 mt-10 h-full"
       dataLength={deals.length}
       next={fetchNextDeals}
       hasMore={deals.length >= PAGE_SIZE}

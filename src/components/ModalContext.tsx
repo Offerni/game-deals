@@ -1,3 +1,5 @@
+"use client";
+
 import { createContext, Dispatch, useReducer } from "react";
 import { IModalReducerAction, IModalReducerState } from "types";
 import Modal from "./Modal";

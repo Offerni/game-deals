@@ -1,3 +1,5 @@
+"use client";
+
 import ReactTooltip from "react-tooltip";
 import { scrollToTop } from "utils";
 
